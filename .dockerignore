@@ -8,3 +8,11 @@ docs
 .eslintcache
 .gocache
 /web/node_modules
+
+
+node_modules
+dist
+web/dist
+.env
+Dockerfile
+docker-compose.yml
