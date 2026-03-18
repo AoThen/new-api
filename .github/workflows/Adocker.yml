@@ -61,7 +61,7 @@ jobs:
 
 #ghcr.io/${{ env.LOWER_NAME }}:
 
-      - uses: actions/delete-package-versions@v56
+      - uses: actions/delete-package-versions@v6
         with: 
           package-name: ${{ env.CONTAINER_NAME }}
           package-type: 'container'
