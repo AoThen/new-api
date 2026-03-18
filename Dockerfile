@@ -1,9 +1,10 @@
+# syntax=docker/dockerfile:1
+
 FROM oven/bun:latest AS builder
 
 WORKDIR /build
-COPY web/package.json .
-COPY web/bun.lock .
-RUN bun install
+COPY web/package.json web/bun.lock ./
+RUN --mount=type=cache,target=/root/.bun bun install
 COPY ./web .
 COPY ./VERSION .
 RUN DISABLE_ESLINT_PLUGIN='true' VITE_REACT_APP_VERSION=$(cat VERSION) bun run build
@@ -18,21 +19,20 @@ ENV GOEXPERIMENT=greenteagc
 
 WORKDIR /build
 
-ADD go.mod go.sum ./
-RUN go mod download
+COPY go.mod go.sum ./
+RUN --mount=type=cache,target=/go/pkg/mod go mod download
 
 COPY . .
 COPY --from=builder /build/dist ./web/dist
 RUN go build -ldflags "-s -w -X 'github.com/QuantumNous/new-api/common.Version=$(cat VERSION)'" -o new-api
 
-FROM debian:bookworm-slim
+FROM alpine:3.19
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends ca-certificates tzdata libasan8 wget \
-    && rm -rf /var/lib/apt/lists/* \
-    && update-ca-certificates
+RUN apk add --no-cache ca-certificates tzdata wget \
+    && adduser -D -u 1000 appuser
 
 COPY --from=builder2 /build/new-api /
 EXPOSE 3000
 WORKDIR /data
+USER appuser
 ENTRYPOINT ["/new-api"]
