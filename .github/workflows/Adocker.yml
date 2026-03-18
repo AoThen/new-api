@@ -52,7 +52,7 @@ jobs:
       - name: 构建并推送 Docker 镜像
         uses: docker/build-push-action@v6
         with:
-          file: Dockerfile2
+          file: Dockerfile
           context: .
           platforms: linux/amd64    #,linux/arm64 # 指定架构：x86_64 和 ARM64
           push: true
