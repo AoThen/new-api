@@ -22,7 +22,8 @@ WORKDIR /build
 COPY go.mod go.sum ./
 RUN --mount=type=cache,target=/go/pkg/mod go mod download
 
-COPY . .
+COPY main.go ./
+COPY common/ constant/ controller/ dto/ i18n/ logger/ middleware/ model/ oauth/ pkg/ relay/ router/ service/ setting/ types/ ./
 COPY --from=builder /build/dist ./web/dist
 RUN go build -ldflags "-s -w -X 'github.com/QuantumNous/new-api/common.Version=$(cat VERSION)'" -o new-api
 

@@ -1,10 +1,74 @@
-.github
+# Git
 .git
-*.md
-.vscode
 .gitignore
-Makefile
-docs
-.eslintcache
-.gocache
+.gitattributes
+
+# GitHub
+.github
+
+# Documentation
+*.md
+!README.md
+docs/
+SECURITY_AUDIT.md
+CLAUDE.md
+AGENTS.md
+
+# IDE
+.vscode
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Build artifacts (will be rebuilt inside Docker)
+new-api
+bin/
+web/dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Node modules (will be reinstalled inside Docker)
 /web/node_modules
+/web/.eslintcache
+/web/.gocache
+
+# Test files
+*_test.go
+test/
+tests/
+
+# Environment configs
+.env.example
+.env.local
+.env.*.local
+
+# Docker configs (not needed in build context)
+docker-compose.yml
+docker-compose.*.yml
+Dockerfile
+.dockerignore
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Electron (not needed for server build)
+electron/
+
+# Prettier/ESLint cache
+.eslintcache
+.prettierrc.cjs
+.prettierrc.mjs
