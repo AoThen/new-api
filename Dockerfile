@@ -23,7 +23,21 @@ COPY go.mod go.sum ./
 RUN --mount=type=cache,target=/go/pkg/mod go mod download
 
 COPY main.go ./
-COPY common/ constant/ controller/ dto/ i18n/ logger/ middleware/ model/ oauth/ pkg/ relay/ router/ service/ setting/ types/ ./
+COPY common/ ./common/
+COPY constant/ ./constant/
+COPY controller/ ./controller/
+COPY dto/ ./dto/
+COPY i18n/ ./i18n/
+COPY logger/ ./logger/
+COPY middleware/ ./middleware/
+COPY model/ ./model/
+COPY oauth/ ./oauth/
+COPY pkg/ ./pkg/
+COPY relay/ ./relay/
+COPY router/ ./router/
+COPY service/ ./service/
+COPY setting/ ./setting/
+COPY types/ ./types/
 COPY --from=builder /build/dist ./web/dist
 RUN go build -ldflags "-s -w -X 'github.com/QuantumNous/new-api/common.Version=$(cat VERSION)'" -o new-api
 
